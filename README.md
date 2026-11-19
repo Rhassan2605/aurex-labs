@@ -96,29 +96,32 @@ The image is served in AVIF/WebP at the right size automatically. To use a remot
 
 ### Adding real projects
 
-Every project currently in `projects.ts` is a **clearly labelled sample concept** (`isSample: true`). Each one shows a "Sample project" badge, a disclaimer on the case study, and **design goals** rather than results. Nothing on the site names a client or claims a metric.
+Real projects (`isSample: false`) show the client, a live link, the work and any verified figures. Entries with `isSample: true` are clearly labelled concepts: they get a "Sample project" badge and show design goals rather than results. Remove them as more real work is published.
 
-To publish authentic work:
-
-1. Export screenshots (desktop around 2400×1500, mobile around 780×1600) to `public/work/<slug>/`.
-2. Add or replace an entry:
+1. Put images in `public/work/<slug>/` as WebP:
+   - `desktop.webp` — 2400×1500 (16:10) cover
+   - `mobile.webp` — about 780 px wide phone capture
+   - optional gallery images, such as social posts at 1080×1350
+2. Add an entry in `src/content/projects.ts`:
 
 ```ts
 {
-  slug: "client-website-redesign",
-  title: "Client Website Redesign",
+  slug: "client-website",
+  title: "Client Name",
   category: "Websites",
   isSample: false,
-  images: [
-    { src: "/work/client-website-redesign/desktop.jpg", alt: "Homepage of …", width: 2400, height: 1500 },
-    { src: "/work/client-website-redesign/mobile.jpg",  alt: "Mobile view of …", width: 780, height: 1600 },
-  ],
-  outcomes: ["Only verified, client-approved results"],
-  // …summary, stack, challenge, solution, etc.
+  client: "Client Name",
+  liveUrl: "https://client.com/",
+  cover:  { src: "/work/client-website/desktop.webp", alt: "Homepage of …", width: 2400, height: 1500 },
+  mobile: { src: "/work/client-website/mobile.webp",  alt: "Mobile view of …", width: 780, height: 1688 },
+  services: ["Web Development"],
+  overview: "…",
+  solution: ["What was delivered"],
+  // optional: challenge, stack, gallery, metrics (verified only), credit
 }
 ```
 
-The first image becomes the cover and the second appears in the phone frame. Remove the sample entries once you have enough real work. If no samples remain, the sample notices disappear automatically.
+`challenge`, `stack`, `gallery`, `metrics` and `outcomes` are optional, and their sections only appear when they are filled in. A real project without a `cover` shows an illustration labelled "Illustration" until screenshots are added.
 
 ### Adding an article
 

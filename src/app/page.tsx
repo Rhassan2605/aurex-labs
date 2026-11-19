@@ -19,6 +19,9 @@ export const metadata: Metadata = pageMetadata({
   template: false,
 });
 
+const realProjects = projects.filter((p) => !p.isSample);
+const featured = realProjects.length >= 4 ? realProjects : projects.slice(0, 6);
+
 export default function HomePage() {
   return (
     <>
@@ -39,14 +42,12 @@ export default function HomePage() {
             }
             lead={
               <p>
-                A look at how we approach different kinds of work. The projects shown are clearly labelled sample
-                concepts that demonstrate our process — real client case studies will be published here as they are
-                approved.
+                Recent work across websites, search and design. Open any project to see what was delivered and how.
               </p>
             }
           />
           <div className="mt-14">
-            <WorkGallery projects={projects} />
+            <WorkGallery projects={featured} />
           </div>
           <div data-reveal className="mt-16 flex justify-center">
             <ButtonLink href="/work" variant="secondary" size="lg">

@@ -5,7 +5,7 @@ import type { ProjectVisual as VisualKind } from "@/content/projects";
  * Used for sample concepts until real screenshots are supplied via `images`.
  */
 
-type Props = { kind: VisualKind; accent: string; title: string; className?: string };
+type Props = { kind: VisualKind; accent: string; title: string; className?: string; uid?: string };
 
 const INK = "#0d0e15";
 const PANEL = "#151622";
@@ -288,15 +288,15 @@ function Seo({ id, accent }: { id: string; accent: string }) {
 
 const scenes = { site: Site, app: App, dashboard: Dashboard, brand: Brand, campaign: Campaign, seo: Seo } as const;
 
-export function ProjectVisual({ kind, accent, title, className }: Props) {
+export function ProjectVisual({ kind, accent, title, className, uid }: Props) {
   const Scene = scenes[kind];
-  const id = `pv-${kind}`;
+  const id = `pv-${(uid ?? kind).replace(/[^a-z0-9-]/gi, "")}`;
   return (
     <svg
       viewBox="0 0 800 500"
       className={className}
       role="img"
-      aria-label={`Illustrated preview of the ${title} sample project`}
+      aria-label={`Illustrated preview for ${title}`}
       preserveAspectRatio="xMidYMid slice"
     >
       <Backdrop id={id} accent={accent} />
@@ -309,7 +309,7 @@ export function ProjectVisual({ kind, accent, title, className }: Props) {
 export function ProjectPhoneVisual({ kind, accent, title, className }: Props) {
   const id = `pp-${kind}`;
   return (
-    <svg viewBox="0 0 390 800" className={className} role="img" aria-label={`Mobile view illustration of the ${title} sample project`}>
+    <svg viewBox="0 0 390 800" className={className} role="img" aria-label={`Mobile view illustration for ${title}`}>
       <defs>
         <linearGradient id={`${id}-a`} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#e4d9ff" />

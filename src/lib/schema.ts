@@ -93,8 +93,9 @@ export function projectSchema(project: Project) {
     url: absoluteUrl(`/work/${project.slug}`),
     creator: { "@id": orgId },
     genre: project.category,
-    keywords: project.stack.join(", "),
-    ...(project.images?.[0] ? { image: absoluteUrl(project.images[0].src) } : {}),
+    ...(project.stack?.length ? { keywords: project.stack.join(", ") } : {}),
+    ...(project.cover ? { image: absoluteUrl(project.cover.src) } : {}),
+    ...(project.liveUrl ? { sameAs: project.liveUrl } : {}),
   };
 }
 

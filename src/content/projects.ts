@@ -1,11 +1,10 @@
 /**
  * Editable project / case-study content.
  *
- * IMPORTANT: Every project below is a clearly labelled SAMPLE concept created to
- * demonstrate the studio's process and presentation. They are not client work
- * and contain no client names or results. Replace them with authentic projects
- * (set `isSample: false`, add real `images`, real `outcomes`) as work is
- * published. See README → "Adding real projects".
+ * Real projects (`isSample: false`) use only facts confirmed by the studio.
+ * Entries with `isSample: true` are clearly labelled demonstration concepts —
+ * not client work — and show design goals rather than results. Remove them as
+ * more authentic work is published. See README → "Adding real projects".
  */
 
 export const projectCategories = [
@@ -35,26 +34,208 @@ export type Project = {
   category: ProjectCategory;
   /** True for demonstration concepts. Shown as a visible label everywhere. */
   isSample: boolean;
+  /** Client or organisation name (real projects). */
+  client?: string;
+  /** Optional note on who delivered the work and in what capacity. */
+  credit?: string;
+  /** Public link to the live work. */
+  liveUrl?: string;
+  liveLabel?: string;
   summary: string;
   metaDescription: string;
-  /** Illustrated fallback visual + accent colour. */
+  /** Illustrated fallback visual + accent colour, used when no cover image exists. */
   visual: ProjectVisual;
   accent: string;
-  /** Optional real screenshots. The first is used as the cover. */
-  images?: ProjectImage[];
+  /** Real screenshots. `cover` is 16:10, `mobile` is a phone-width capture. */
+  cover?: ProjectImage;
+  mobile?: ProjectImage;
+  /** Additional images, e.g. social posts, shown in a gallery grid. */
+  gallery?: ProjectImage[];
   services: string[];
-  stack: string[];
+  stack?: string[];
   overview: string;
-  challenge: string;
-  solution: string[];
+  challenge?: string;
+  solution?: string[];
+  /** Key figures for real projects — only verified, client-approved numbers. */
+  metrics?: { value: string; label: string }[];
+  metricsNote?: string;
   /**
    * For samples: the goals the concept is designed around (not results).
    * For real projects: verified outcomes only.
    */
-  outcomes: string[];
+  outcomes?: string[];
 };
 
+const euroCarsCredit =
+  "Delivered by founder Muhammad Hassan Munir in his role as IT Manager at Euro Cars London (June 2025 – present).";
+
+const post = (file: string, alt: string): ProjectImage => ({
+  src: `/work/euro-cars-london-social-media/${file}.webp`,
+  alt,
+  width: 1080,
+  height: 1350,
+});
+
 export const projects: Project[] = [
+  {
+    slug: "el-celler-de-can-roca-website",
+    title: "El Celler de Can Roca",
+    category: "Websites",
+    isSample: false,
+    client: "El Celler de Can Roca",
+    liveUrl: "https://cellercanroca.com/",
+    liveLabel: "Visit cellercanroca.com",
+    summary: "Design and development of the WordPress website for El Celler de Can Roca in Girona, Spain.",
+    metaDescription:
+      "Case study: design and development of the multilingual WordPress website for El Celler de Can Roca and the Roca family's venues in Girona.",
+    visual: "site",
+    accent: "#E8892B",
+    cover: {
+      src: "/work/el-celler-de-can-roca-website/desktop.webp",
+      alt: "El Celler de Can Roca website homepage showing the restaurant and the Roca family's venues in an image-led grid",
+      width: 2400,
+      height: 1500,
+    },
+    mobile: {
+      src: "/work/el-celler-de-can-roca-website/mobile.webp",
+      alt: "El Celler de Can Roca website on a mobile screen",
+      width: 780,
+      height: 1688,
+    },
+    services: ["Web Development"],
+    stack: ["WordPress"],
+    overview:
+      "The website brings El Celler de Can Roca together with the Roca family's related venues — including Esperit Roca, Hotel Esperit Roca and Restaurant Fontané — in a calm, image-led layout.",
+    solution: [
+      "A clean, editorial grid with a card for each venue, linking to its own website and reservations.",
+      "Content available in four languages: Catalan, Spanish, English and French.",
+      "Built on WordPress so the team can keep venues and content up to date.",
+    ],
+  },
+  {
+    slug: "euro-cars-london-seo",
+    title: "Euro Cars London — SEO & Site Health",
+    category: "SEO",
+    isSample: false,
+    client: "Euro Cars London",
+    credit: euroCarsCredit,
+    liveUrl: "https://www.eurocars.london/",
+    liveLabel: "Visit eurocars.london",
+    summary: "Technical SEO for the rebuild of a London chauffeur company's website, followed by a site-wide health clean-up.",
+    metaDescription:
+      "Case study: technical SEO and site health for Euro Cars London — 200+ pages audited, new landing pages, duplicate content fixed and 99/100 mobile PageSpeed.",
+    visual: "seo",
+    accent: "#413C98",
+    cover: {
+      src: "/work/euro-cars-london-seo/desktop.webp",
+      alt: "Euro Cars London website homepage with the chauffeur booking form",
+      width: 2400,
+      height: 1500,
+    },
+    mobile: {
+      src: "/work/euro-cars-london-seo/mobile.webp",
+      alt: "Euro Cars London website on a mobile screen",
+      width: 780,
+      height: 1688,
+    },
+    services: ["SEO & Growth", "Web Development"],
+    stack: ["WordPress", "Elementor", "Google Search Console", "PageSpeed Insights", "cPanel"],
+    overview:
+      "Euro Cars London is a Mercedes-Benz chauffeur company offering airport, hotel, intercity and event transfers. Our founder led technical SEO for the website rebuild and the clean-up that followed.",
+    challenge:
+      "The site had duplicate content, inconsistent fleet details across pages and spam backlinks, and the rebuild needed a structure that could be found for specific airport, hotel and inter-city searches.",
+    solution: [
+      "Audited more than 200 pages and planned the new site structure together with the developer.",
+      "Planned and launched dedicated airport, hotel and inter-city landing pages.",
+      "Fixed duplicate content and incorrect fleet details site-wide, and merged duplicate blog posts with 301 redirects.",
+      "Cleaned up spam backlinks and monitored indexing in Google Search Console.",
+    ],
+    metrics: [
+      { value: "99", label: "Mobile PageSpeed score" },
+      { value: "95%", label: "Site health" },
+      { value: "0", label: "Crawl errors" },
+      { value: "200+", label: "Pages audited" },
+    ],
+    metricsNote: "Figures from PageSpeed Insights and site-audit reports at the time of the work.",
+  },
+  {
+    slug: "euro-cars-london-social-media",
+    title: "Euro Cars London — Social Media Design",
+    category: "Graphic Design",
+    isSample: false,
+    client: "Euro Cars London",
+    credit: euroCarsCredit,
+    liveUrl: "https://www.instagram.com/eurocarslondon_/",
+    liveLabel: "View on Instagram",
+    summary: "A branded Instagram and Facebook post series for a London chauffeur company — airport transfers, reviews, fleet and seasonal campaigns.",
+    metaDescription:
+      "Case study: branded Instagram and Facebook post design for Euro Cars London — airport transfers, reviews and UK event campaigns.",
+    visual: "campaign",
+    accent: "#D4AF37",
+    cover: {
+      src: "/work/euro-cars-london-social-media/cover.webp",
+      alt: "Four Euro Cars London social media posts: airport transfers, Twickenham match day, Google reviews and Black Friday",
+      width: 2400,
+      height: 1500,
+    },
+    gallery: [
+      post("1-airport-transfers", "Euro Cars London post: London airport transfers at a fixed price"),
+      post("2-reviews", "Euro Cars London post: 5.0 rating from 545+ Google reviews"),
+      post("3-why-choose-us", "Euro Cars London post: why choose Euro Cars London"),
+      post("4-christmas", "Euro Cars London post: Christmas season chauffeur bookings"),
+      post("1-twickenham", "Euro Cars London post: match day at Twickenham"),
+      post("2-winter-wonderland", "Euro Cars London post: Winter Wonderland in Hyde Park"),
+      post("3-nights-out", "Euro Cars London post: London nights out"),
+      post("4-black-friday", "Euro Cars London post: Black Friday shopping trips"),
+    ],
+    services: ["Graphic Design"],
+    stack: ["Canva", "Instagram", "Meta Business Suite"],
+    overview:
+      "A weekly series of on-brand social posts for Euro Cars London, designed so every post carries the logo, the Mercedes-Benz fleet, a clear message and direct booking details.",
+    challenge:
+      "Posting needed to restart with a consistent, recognisable look — and every post had to make it easy for people to get in touch and book.",
+    solution: [
+      "A post system where every design includes the logo, the fleet, a short quote, call and WhatsApp details and a QR code.",
+      "Engagement hooks such as “Comment QUOTE” to turn views into conversations.",
+      "Two visual directions: a light navy-and-red style based on the website, and a premium black-and-gold style for UK event campaigns.",
+      "Posts scheduled across Instagram and the Facebook page for UK evening hours.",
+    ],
+  },
+  {
+    slug: "corvit-systems-sahiwal",
+    title: "Corvit Systems Sahiwal",
+    category: "Websites",
+    isSample: false,
+    client: "Corvit Systems Sahiwal",
+    summary: "Website, SEO, branding and social media graphics for Corvit Systems Sahiwal, an IT training institute.",
+    metaDescription:
+      "Project: website development, SEO, brand identity and social media graphics for Corvit Systems Sahiwal, an IT training institute.",
+    visual: "site",
+    accent: "#5B8CFF",
+    services: ["Web Development", "SEO & Growth", "Brand Identity", "Graphic Design"],
+    overview:
+      "An end-to-end digital presence for Corvit Systems Sahiwal: the website, search visibility, brand assets and graphics for social media.",
+    solution: [
+      "Website design and development",
+      "Search engine optimisation",
+      "Brand identity and logo work",
+      "Graphics for social media",
+    ],
+  },
+  {
+    slug: "sams-education-system",
+    title: "Sams Education System",
+    category: "Websites",
+    isSample: false,
+    client: "Sams Education System",
+    summary: "Website, SEO and social media graphics for Sams Education System, an education provider.",
+    metaDescription: "Project: website development, SEO and social media graphics for Sams Education System.",
+    visual: "site",
+    accent: "#3FB68B",
+    services: ["Web Development", "SEO & Growth", "Graphic Design"],
+    overview: "A website, search foundations and social media graphics for Sams Education System.",
+    solution: ["Website design and development", "Search engine optimisation", "Graphics for social media"],
+  },
   {
     slug: "architecture-studio-website",
     title: "Architecture Studio Website",
